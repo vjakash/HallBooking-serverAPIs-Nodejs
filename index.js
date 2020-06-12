@@ -17,7 +17,8 @@ app.post("/create", (req, res) => {
 
     rooms.push(req.body);
     res.json({
-        message: "room added "
+        message: "room added ",
+        room_id: req.body["id"]
     })
 });
 app.post("/book", (req, res) => {
@@ -25,13 +26,15 @@ app.post("/book", (req, res) => {
     let end = parseInt(req.body["endtime"].split(":").join(""));
     let bookedDetails = [];
     let flag = 0;
-    if (rooms[req.body["id"]].bookings.length != 0) {
-        for (let i of rooms[req.body["id"]].bookings) {
+
+    if (rooms[parseInt(req.body["id"])].bookings.length != 0) {
+        for (let i of rooms[parseInt(req.body["id"])].bookings) {
             if (i.date == req.body["date"]) {
                 bookedDetails.push({ date: i.date, starttime: i.starttime, endtime: i.endtime })
                 let checkStart = parseInt(i.starttime.split(":").join(""));
                 let checkEnd = parseInt(i.endtime.split(":").join(""));
-                if ((start > checkStart && start < checkEnd) || (end > checkStart && end < checkEnd)) {
+                // console.log(start, end, checkStart, checkEnd);
+                if ((start > checkStart && start < checkEnd) || (end > checkStart && end < checkEnd) || (start == checkStart && end == checkEnd)) {
                     flag = 1;
                 }
             }
