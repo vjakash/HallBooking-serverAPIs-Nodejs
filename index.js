@@ -25,13 +25,15 @@ app.post("/book", (req, res) => {
     let end = parseInt(req.body["endtime"].split(":").join(""));
     let bookedDetails = [];
     let flag = 0;
-    for (let i of rooms[req.body["id"]].bookings) {
-        if (i.date == req.body["date"]) {
-            bookedDetails.push({ date: i.date, starttime: i.starttime, endtime: i.endtime })
-            let checkStart = parseInt(i.starttime.split(":").join(""));
-            let checkEnd = parseInt(i.endtime.split(":").join(""));
-            if ((start > checkStart && start < checkEnd) || (end > checkStart && end < checkEnd)) {
-                flag = 1;
+    if (rooms[req.body["id"]].bookings.length != 0) {
+        for (let i of rooms[req.body["id"]].bookings) {
+            if (i.date == req.body["date"]) {
+                bookedDetails.push({ date: i.date, starttime: i.starttime, endtime: i.endtime })
+                let checkStart = parseInt(i.starttime.split(":").join(""));
+                let checkEnd = parseInt(i.endtime.split(":").join(""));
+                if ((start > checkStart && start < checkEnd) || (end > checkStart && end < checkEnd)) {
+                    flag = 1;
+                }
             }
         }
     }
