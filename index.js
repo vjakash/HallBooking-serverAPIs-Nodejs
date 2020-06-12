@@ -13,7 +13,7 @@ app.listen(port, () => {
 
 app.post("/create", (req, res) => {
     req.body["id"] = id++;
-    req.body["bookings"] = [{ "name": "akash", date: "12-06-2020", starttime: "4:00", endtime: "5:00" }, { "name": "kumar", date: "12-06-2020", starttime: "5:00", endtime: "6:00" }];
+    req.body["bookings"] = [];
 
     rooms.push(req.body);
     res.json({
